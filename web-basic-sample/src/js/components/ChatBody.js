@@ -3,7 +3,7 @@ import { appendToFirst, createDivEl, errorAlert, getDataInElement, isScrollBotto
 import { Message } from './Message';
 import { SendBirdAction } from '../SendBirdAction';
 import { Spinner } from './Spinner';
-import { MESSAGE_REQ_ID } from '../const';
+import { MESSAGE_REQ_ID, SENDBIRD } from '../const';
 
 class ChatBody {
   constructor(channel) {
@@ -127,6 +127,9 @@ class ChatBody {
         this.channel.isGroupChannel()
       ) {
         this.readReceiptManage(message);
+        if (message.message.includes(SENDBIRD)) {
+          alert(SENDBIRD);
+        }
       }
     });
     if (goToBottom) this.scrollToBottom();

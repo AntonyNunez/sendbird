@@ -1,6 +1,7 @@
 import SendBird from 'sendbird';
 import {
-  APP_ID as appId
+  APP_ID as appId,
+  ANTONY_CUSTOM_TYPE as antonyCustomType
 } from './const';
 import {
   isNull
@@ -220,6 +221,7 @@ class SendBirdAction {
       this.groupChannelQuery.limit = 50;
       this.groupChannelQuery.includeEmpty = false;
       this.groupChannelQuery.order = 'latest_last_message';
+      this.groupChannelQuery.customTypesFilter = [antonyCustomType];
     }
     return new Promise((resolve, reject) => {
       if (this.groupChannelQuery.hasNext && !this.groupChannelQuery.isLoading) {
@@ -236,6 +238,8 @@ class SendBirdAction {
     return new Promise((resolve, reject) => {
       let params = new this.sb.GroupChannelParams();
       params.addUserIds(userIds);
+      params.customType = antonyCustomType;
+      params.name = this.getCurrentUser().userId + "(" + antonyCustomType + ")";
       this.sb.GroupChannel.createChannel(params, (groupChannel, error) => {
         error ? reject(error) : resolve(groupChannel);
       });
